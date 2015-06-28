@@ -17,7 +17,11 @@ public class HttpClientTools {
 
 	// httpClient
 	private CloseableHttpClient client;
-
+	
+	private RequestConfig requestConfig;
+	
+	private int time;
+	
 	{
 		
 		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();  
@@ -26,17 +30,19 @@ public class HttpClientTools {
 		// Increase default max connection per route to 20  
 		cm.setDefaultMaxPerRoute(20);  
 		client = HttpClientBuilder.create().setConnectionManager(cm).build();
+		time = 3000;
+		requestConfig = RequestConfig.custom()
+				.setConnectionRequestTimeout(time).setConnectTimeout(time)
+				.build();
 		
 	}
 
 	public String executeGet(String url) {
-		
 		CloseableHttpResponse cResponse = null;
 		HttpGet request = null;
 		try {
 			request = new HttpGet(url);
-			request.setConfig(buildRequestConfig());
-			//request.addHeader(HttpHeaders.ACCEPT, "application/xml"); 
+			request.setConfig(this.requestConfig);
 			cResponse = client.execute(request);
 			int statuscode = cResponse.getStatusLine().getStatusCode();
 			if (statuscode == HttpStatus.SC_OK) {
@@ -56,28 +62,9 @@ public class HttpClientTools {
 				if(cResponse !=null)
 				cResponse.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 		return "";
 	}
-
-	private RequestConfig buildRequestConfig() {
-		int time = 3000;
-		RequestConfig requestConfig = RequestConfig.custom()
-				.setConnectionRequestTimeout(time).setConnectTimeout(time)
-				.setSocketTimeout(time).build();
-		return requestConfig;
-	}
-//
-//	public static void main(String[] args) {
-//		HttpClientTools clientTools = new HttpClientTools();
-//		clientTools.init();
-//		String html = clientTools
-//				.executeGet("http://bbs.tianya.cn/post-333-688409-1.shtml");
-//		System.out.print(html);
-//	}
-
 }
