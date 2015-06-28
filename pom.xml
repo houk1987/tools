@@ -4,4 +4,27 @@
   <artifactId>tools</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+  
+  <description>工具包</description>
+  <url>https://github.com/houk1987/tools.git</url>
+  
+   <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <junit.version>4.7</junit.version>
+  </properties>
+  
+  <modules>
+  	<module>httpclientTools</module>
+  </modules>
+  
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  			<groupId>junit</groupId>
+  			<artifactId>junit</artifactId>
+  			<version>${junit.version}</version>
+  			 <scope>test</scope>
+  		</dependency>
+  	</dependencies>
+  </dependencyManagement>
 </project>
