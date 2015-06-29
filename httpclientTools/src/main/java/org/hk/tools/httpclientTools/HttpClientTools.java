@@ -7,16 +7,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.zip.GZIPInputStream;
 
-import javax.net.ssl.SSLHandshakeException;
-
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpEntityEnclosingRequest;
-import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
-import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.GzipDecompressingEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -25,7 +19,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
@@ -37,7 +30,6 @@ public class HttpClientTools {
 	
 	private RequestConfig requestConfig;
 	
-	private int time;
 	
 	{
 		
@@ -48,7 +40,6 @@ public class HttpClientTools {
 		// Increase default max connection per route to 20  
 		cm.setDefaultMaxPerRoute(200);  
 		client = HttpClientBuilder.create().setConnectionManager(cm).build();
-		time = 0;
 		requestConfig = RequestConfig.custom().setConnectionRequestTimeout(5000)
                 .setSocketTimeout(50000).setConnectTimeout(10000).setRedirectsEnabled(false)
                 .build();
