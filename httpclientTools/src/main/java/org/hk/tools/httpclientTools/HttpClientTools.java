@@ -41,7 +41,7 @@ public class HttpClientTools {
 		cm.setDefaultMaxPerRoute(200);  
 		client = HttpClientBuilder.create().setConnectionManager(cm).build();
 		requestConfig = RequestConfig.custom().setConnectionRequestTimeout(5000)
-                .setSocketTimeout(50000).setConnectTimeout(10000).setRedirectsEnabled(false)
+                .setConnectTimeout(10000).setRedirectsEnabled(false)
                 .build();
 		
 		
@@ -60,10 +60,14 @@ public class HttpClientTools {
 				return null;
 			}
 			HttpEntity entity = cResponse.getEntity();
+			Thread.sleep(1000);
 			return readHtmlContentFromEntity(entity);
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			if (request != null) {
@@ -100,6 +104,7 @@ public class HttpClientTools {
                 html = EntityUtils.toString(new GzipDecompressingEntity(httpEntity),"UTF-8");
             } else {
                 html = EntityUtils.toString(httpEntity,"UTF-8");
+                EntityUtils.consume(httpEntity); 
             }
 
         } else {
