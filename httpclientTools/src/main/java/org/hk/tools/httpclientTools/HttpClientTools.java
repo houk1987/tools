@@ -40,8 +40,8 @@ public class HttpClientTools {
 		// Increase default max connection per route to 20  
 		cm.setDefaultMaxPerRoute(200);  
 		client = HttpClientBuilder.create().setConnectionManager(cm).build();
-		requestConfig = RequestConfig.custom().setConnectionRequestTimeout(5000)
-                .setConnectTimeout(10000).setRedirectsEnabled(false)
+		requestConfig = RequestConfig.custom().setConnectionRequestTimeout(3000)
+                .setConnectTimeout(6000000).setRedirectsEnabled(false)
                 .build();
 		
 		
